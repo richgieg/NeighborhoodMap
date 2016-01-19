@@ -13,27 +13,6 @@ function SubwayStation(name, line, division, routes, latitude, longitude) {
 }
 
 
-function ViewModel(locations) {
-    var self = this;
-    self.locations = locations;
-    self.filter = ko.observable('');
-    self.matchingLocations = ko.computed(function() {
-        var matches = [];
-        var re = new RegExp(self.filter(), 'i');
-        self.locations.forEach(function(val) {
-            if (val.name.search(re) !== -1) {
-                matches.push(val);
-            }
-        });
-        return matches;
-    });
-
-    self.talk = function(location) {
-        alert(location);
-    };
-}
-
-
 function createSubwayStationArray(records) {
     // Sort by latitude, then by longitude
     records.sort(function(a, b) {
@@ -140,18 +119,41 @@ function createSubwayStationArray(records) {
 }
 
 
-// Parse subway station CSV file asynchronously. When complete, the callback
-// will be invoked. First, the callback processes the CSV records to build an
-// array of SubwayStation objects. Second, it activates Knockout, passing the
-// array to the main view model.
-Papa.parse('nyc-subway-stations.csv', {
-    header: true,
-    download: true,
-    complete: function(results) {
-        // Process the CSV records to create array of SubwayStation objects
-        var locations = createSubwayStationArray(results.data);
+function ViewModel() {
+    var self = this;
 
-        // Activate Knockout
-        ko.applyBindings(new ViewModel(locations));
-    }
-});
+    // Observables
+    self.locations = ko.observableArray([]);
+    self.filter = ko.observable('');
+
+    // Computed Observables
+    self.matchingLocations = ko.computed(function() {
+        var matches = [];
+        var re = new RegExp(self.filter(), 'i');
+        self.locations().forEach(function(val) {
+            if (val.name.search(re) !== -1) {
+                matches.push(val);
+            }
+        });
+        return matches;
+    });
+
+    // Methods
+    self.talk = function(location) {
+        alert(location);
+    };
+
+    // Initialize the locations array (asynchronously)
+    Papa.parse('nyc-subway-stations.csv', {
+        header: true,
+        download: true,
+        complete: function(results) {
+            // Process the CSV records to create array of SubwayStation objects
+            self.locations(createSubwayStationArray(results.data));
+        }
+    });
+}
+
+
+// Activate Knockout
+ko.applyBindings(new ViewModel());
