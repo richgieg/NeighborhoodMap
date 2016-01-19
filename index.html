@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search</title>
+</head>
+
+<body>
+    <input data-bind="textInput: filter">
+    <ul data-bind="foreach: matchingLocations">
+        <li data-bind="text: display, click: $root.talk"></li>
+    </ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+    <script src="papaparse.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
