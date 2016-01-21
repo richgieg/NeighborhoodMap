@@ -29,10 +29,15 @@ function SubwayStation(dataObj) {
 
     // Toggles the map marker's bounce animation and opens the marker's info
     // window. This is the callback for the marker's click event.
-    self.toggleMapMarkerBounce = function() {
+    self.mapMarkerClickHandler = function() {
+        // Get current animation state
         var animationState = self.mapMarker.getAnimation();
+
+        // If currently animating, stop animating and close info window
         if (animationState !== null && animationState !== undefined) {
             self.mapMarker.setAnimation(null);
+            self.infoWindow.close();
+        // Otherwise, start animating and open info window
         } else {
             self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
             self.infoWindow.open(map, self.mapMarker);
@@ -51,8 +56,8 @@ function SubwayStation(dataObj) {
         self.infoWindow.open(map, self.mapMarker);
     }
 
-    // Sets toggleMapMarkerBounce as the click callback for the map marker
-    self.mapMarker.addListener('click', self.toggleMapMarkerBounce);
+    // Sets mapMarkerClickHandler as the click callback for the map marker
+    self.mapMarker.addListener('click', self.mapMarkerClickHandler);
 }
 
 
