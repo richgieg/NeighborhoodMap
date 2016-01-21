@@ -14,7 +14,7 @@
     <input data-bind="textInput: filter">
     <h3 data-bind="text: loadingMsg, visible: loadingMsg"></h3>
     <ul data-bind="foreach: matchingStations">
-        <li data-bind="text: display, click: $root.activateStation"></li>
+        <li data-bind="text: display, click: focus"></li>
     </ul>
     <div id="map"></div>
 
