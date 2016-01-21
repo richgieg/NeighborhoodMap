@@ -10,9 +10,9 @@
     <div id="map"></div>
     <h1 id="headline">NYC Subway Stations</h1>
     <a id="toggle" href="#" data-bind="click: toggleVisibility">☰ Toggle List ☰</a>
-    <input id="filter-textbox" data-bind="textInput: filter, css: cssVisibility"
+    <input id="filter-textbox" data-bind="textInput: filter, css: { visible: isVisible }"
         placeholder="Type here to filter...">
-    <div id="listview" data-bind="css: cssVisibility">
+    <div id="listview" data-bind="css: { visible: isVisible }">
         <h3 data-bind="text: loadingMsg, visible: loadingMsg"></h3>
         <ul data-bind="foreach: filterResults">
             <li class="station-item">

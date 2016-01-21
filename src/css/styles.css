@@ -60,6 +60,10 @@ a:hover {
 }
 
 #filter-textbox {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.5s, opacity 0.25s linear;
+
     position: absolute;
     top: 150px;
     left: 20px;
@@ -74,6 +78,11 @@ a:hover {
 }
 
 #listview {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.5s, opacity 0.25s linear;
+
+
     position: absolute;
     top: 215px;
     left: 20px;
@@ -104,14 +113,15 @@ a:hover {
     display: block;
 }
 
-.list-visible {
-    opacity: 0.9;
-    visibility: visible;
+.visible {
+    opacity: 0.9 !important;
+    visibility: visible !important;
     transition: opacity 0.5s linear;
 }
 
-.list-invisible {
+/*.list-invisible {
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.5s, opacity 0.25s linear;
 }
+*/

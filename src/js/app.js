@@ -74,11 +74,6 @@ function ListViewModel() {
         self.isVisible(!self.isVisible());
     }
 
-    // Facilitates CSS opacity transition animation
-    self.cssVisibility = ko.pureComputed(function() {
-        return self.isVisible() ? 'list-visible' : 'list-invisible';
-    });
-
     // Initialize the array of SubwayStation objects asynchronously
     var jsonUrl = 'https://www.richgieg.com/nyc-subway-api/stations';
     $.getJSON(jsonUrl, function(data) {
