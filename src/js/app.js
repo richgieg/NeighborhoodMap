@@ -15,34 +15,43 @@ function SubwayStation(dataObj) {
     self.latitude = parseFloat(dataObj.latitude);
     self.longitude = parseFloat(dataObj.longitude);
 
-    // Create a map marker for this SubwayStation object
+    // Create the map marker for this SubwayStation object
     self.mapMarker = new google.maps.Marker({
         position: {lat: self.latitude, lng: self.longitude},
         map: map,
         title: self.name
     });
 
-    // Toggles the map marker's bounce animation
+    // Create the info window for this SubwayStation object
+    self.infoWindow = new google.maps.InfoWindow({
+        content: 'test'
+    });
+
+    // Toggles the map marker's bounce animation and opens the marker's info
+    // window. This is the callback for the marker's click event.
     self.toggleMapMarkerBounce = function() {
         var animationState = self.mapMarker.getAnimation();
         if (animationState !== null && animationState !== undefined) {
             self.mapMarker.setAnimation(null);
         } else {
             self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
+            self.infoWindow.open(map, self.mapMarker);
         }
 
         // Remove focus from filter textbox when marker is clicked (on iOS)
         hideIOSKeyboard();
     }
 
-    // Centers the map on the requested location. This fires when a listview
-    // item is clicked.
+    // Centers the map on the requested location, animates the map marker,
+    // and opens the marker's info window. This fires when a listview item
+    // is clicked, via Knockout.
     self.focus = function() {
         map.panTo({lat: self.latitude, lng: self.longitude});
         self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
+        self.infoWindow.open(map, self.mapMarker);
     }
 
-    // Toggles the map marker's its bounce animation when clicked
+    // Sets toggleMapMarkerBounce as the click callback for the map marker
     self.mapMarker.addListener('click', self.toggleMapMarkerBounce);
 }
 
