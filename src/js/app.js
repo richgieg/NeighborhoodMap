@@ -1,3 +1,11 @@
+// Helper function for taking focus away from textbox on iOS devices
+function hideIOSKeyboard() {
+     document.activeElement.blur();
+     $("input").blur();
+}
+
+
+// Model representing a subway station
 function SubwayStation(dataObj) {
     var self = this;
     self.name = dataObj.name;
@@ -6,17 +14,15 @@ function SubwayStation(dataObj) {
     self.routes = dataObj.routes;
     self.latitude = parseFloat(dataObj.latitude);
     self.longitude = parseFloat(dataObj.longitude);
-    self.mapMarker =  new google.maps.Marker({
+
+    // Create a map marker for this SubwayStation object
+    self.mapMarker = new google.maps.Marker({
         position: {lat: self.latitude, lng: self.longitude},
         map: map,
         title: self.name
     });
 
-    self.display = ko.computed(function() {
-        return self.name + ' (' + self.line + ' / ' + self.division + ')' +
-            ' [' + self.routes.join()  + ']';
-    });
-
+    // Toggles the map marker's bounce animation
     self.toggleMapMarkerBounce = function() {
         var animationState = self.mapMarker.getAnimation();
         if (animationState !== null && animationState !== undefined) {
@@ -24,49 +30,61 @@ function SubwayStation(dataObj) {
         } else {
             self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
         }
+        hideIOSKeyboard();
     }
 
+    // Centers the map on the requested location. This fires when a listview
+    // item is clicked.
     self.focus = function() {
-        map.setCenter({lat: self.latitude, lng: self.longitude});
-        self.toggleMapMarkerBounce();
+        map.panTo({lat: self.latitude, lng: self.longitude});
+        self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
     }
 
+    // Toggles the map marker's its bounce animation when clicked
     self.mapMarker.addListener('click', self.toggleMapMarkerBounce);
 }
 
 
-function ViewModel() {
+// Main list view
+function ListViewModel() {
     var self = this;
-
-    // Observables
     self.stations = ko.observableArray([]);
     self.filter = ko.observable('');
     self.loadingMsg = ko.observable('Loading subway stations...');
+    self.isVisible = ko.observable(true);
 
-    // Computed Observables
-    self.matchingStations = ko.computed(function() {
+    // Update the list contents whenever the filter is modified. Also toggles
+    // map marker visibility depending on the filter results.
+    self.filterResults = ko.computed(function() {
         var matches = [];
         var re = new RegExp(self.filter(), 'i');
-        self.stations().forEach(function(val) {
-            if (val.name.search(re) !== -1) {
-                matches.push(val);
+        self.stations().forEach(function(station) {
+            if (station.name.search(re) !== -1) {
+                matches.push(station);
+                station.mapMarker.setVisible(true);
+            } else {
+                station.mapMarker.setVisible(false);
             }
         });
         return matches;
     });
 
-    // Initialize the stations array asynchronously
+    // Show/hide the list
+    self.toggleVisibility = function() {
+        self.isVisible(!self.isVisible());
+    }
+
+    // Initialize the array of SubwayStation objects asynchronously
     var jsonUrl = 'https://www.richgieg.com/nyc-subway-api/stations';
     $.getJSON(jsonUrl, function(data) {
         var stations = [];
-        var station;
         data.stations.forEach(function(dataObj) {
             // Create SubwayStation object and append it to the stations array
-            station = new SubwayStation(dataObj);
-            stations.push(station);
+            stations.push(new SubwayStation(dataObj));
         });
         self.stations(stations);
-        self.loadingMsg('');
+        // Set the loading message to null, effectively hiding it
+        self.loadingMsg(null);
     }).fail(function() {
         self.loadingMsg('Unable to load data... try refreshing');
         console.log('ERROR: Could not acquire subway station data');
@@ -77,12 +95,18 @@ function ViewModel() {
 // Callback that initializes the Google Map object and activates Knockout
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
         center: {lat: 40.718092, lng: -73.901454},
-        zoom: 12
+        disableDefaultUI: true
     });
 
+    // Ensure focus is taken away from textbox when map is touched (on iOS)
+    map.addListener('click', function() {
+         hideIOSKeyboard();
+    })
+
     // Activate Knockout once the map is initialized
-    ko.applyBindings(new ViewModel());
+    ko.applyBindings(new ListViewModel());
 }
 
 
