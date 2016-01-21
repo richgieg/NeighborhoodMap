@@ -18,6 +18,7 @@ function ViewModel() {
     // Observables
     self.stations = ko.observableArray([]);
     self.filter = ko.observable('');
+    self.loadingMsg = ko.observable('Loading subway stations...');
 
     // Computed Observables
     self.matchingStations = ko.computed(function() {
@@ -32,7 +33,7 @@ function ViewModel() {
     });
 
     // Methods
-    self.focus = function(station) {
+    self.activateStation = function(station) {
         alert(station.display());
     };
 
@@ -44,7 +45,9 @@ function ViewModel() {
             stations.push(new SubwayStation(dataObj));
         });
         self.stations(stations);
+        self.loadingMsg('');
     }).fail(function() {
+        self.loadingMsg('Unable to load data... try refreshing');
         console.log('ERROR: Could not acquire subway station data');
     });
 }

@@ -3,15 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Search</title>
+    <title>NYC Subway Stations</title>
 </head>
 
 <body>
     <input data-bind="textInput: filter">
-    <h3 data-bind="visible: matchingStations().length === 0">
-        Loading subway stations...</h3>
+    <h3 data-bind="text: loadingMsg, visible: loadingMsg"></h3>
     <ul data-bind="foreach: matchingStations">
-        <li data-bind="text: display, click: $root.focus"></li>
+        <li data-bind="text: display, click: $root.activateStation"></li>
     </ul>
 
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
