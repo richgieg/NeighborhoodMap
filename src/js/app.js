@@ -30,6 +30,8 @@ function SubwayStation(dataObj) {
         } else {
             self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
         }
+
+        // Remove focus from filter textbox when marker is clicked (on iOS)
         hideIOSKeyboard();
     }
 
