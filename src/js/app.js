@@ -52,5 +52,13 @@ function ViewModel() {
     });
 }
 
-// Activate Knockout
-ko.applyBindings(new ViewModel());
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 40.796092, lng: -73.961454},
+        zoom: 10
+    });
+
+    // Activate Knockout once the map is initialized
+    ko.applyBindings(new ViewModel());
+}
