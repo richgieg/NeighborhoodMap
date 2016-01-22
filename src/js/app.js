@@ -51,7 +51,19 @@ function SubwayStation(dataObj) {
             //     console.log('ERROR: Could not acquire Flickr data');
             // });
 
-            flickr.getPhotos(self.latitude, self.longitude);
+            flickr.getPhotos(self.latitude, self.longitude, function(results) {
+                console.log(results);
+                content += '<div class="flickr-box">'
+                content += '<h3 class="flickr-headline">Flickr Photos</h3>';
+                results.forEach(function(info) {
+                    content += '<img class="flickr-thumb" src="' +
+                        info.imgThumbUrl + '">';
+                });
+
+
+                '</div>';
+                self.infoWindow.setContent(content);
+            });
         }
 
         // Show info window

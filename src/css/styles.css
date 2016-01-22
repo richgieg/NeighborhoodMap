@@ -63,7 +63,6 @@ a:hover {
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.5s, opacity 0.25s linear;
-
     position: absolute;
     top: 150px;
     left: 20px;
@@ -71,7 +70,6 @@ a:hover {
     height: 50px;
     font-size: 1.5em;
     border: 4px solid #aeaeae;
-    /*opacity: 0.9;*/
     margin: 0;
     padding: 0 10px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
@@ -81,21 +79,24 @@ a:hover {
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.5s, opacity 0.25s linear;
-
-
     position: absolute;
     top: 215px;
     left: 20px;
     width: 280px;
     height: 300px;
     border: 4px solid #dedede;
-    /*opacity: 0.9;*/
     margin: 0;
     padding: 0 10px;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     background-color: white;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.visible {
+    opacity: 0.9 !important;
+    visibility: visible !important;
+    transition: opacity 0.5s linear;
 }
 
 .station-item {
@@ -113,14 +114,8 @@ a:hover {
     display: block;
 }
 
-.visible {
-    opacity: 0.9 !important;
-    visibility: visible !important;
-    transition: opacity 0.5s linear;
-}
-
 .info-title {
-    min-width: 15em;
+    min-width: 262px;
     margin: 0;
 }
 
@@ -137,4 +132,23 @@ a:hover {
 .info-routes {
     font-weight: bold;
     color: #647fbf;
+}
+
+.flickr-box {
+    width: 262px;
+}
+
+.flickr-headline {
+    color: slategray;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+.flickr-thumb {
+    width: 30px;
+    margin: 3px 3px 3px 0;
+}
+
+.flickr-thumb:last-child {
+    margin-right: 0;
 }
