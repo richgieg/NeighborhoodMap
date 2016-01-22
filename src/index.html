@@ -16,7 +16,7 @@
         <h3 data-bind="text: loadingMsg, visible: loadingMsg"></h3>
         <ul data-bind="foreach: filterResults">
             <li class="station-item">
-                <a href="#" data-bind="click: focus">
+                <a href="#" data-bind="click: function() {focus(); $root.hideIfSmallWindow();}">
                     <span class="station-name" data-bind="text: name"></span>
                     <span class="station-line" data-bind="text: line"></span>
                 </a>

@@ -106,6 +106,15 @@ function ListViewModel() {
         self.isVisible(!self.isVisible());
     }
 
+    // Hide the list if the viewing area is small. This fires when a list item
+    // is clicked, so that the corresponding map marker's info window is
+    // not blocked by the list on smaller screens.
+    self.hideIfSmallWindow = function() {
+        if (window.innerWidth < 1024) {
+            self.isVisible(false);
+        }
+    }
+
     // Initialize the array of SubwayStation objects asynchronously
     var jsonUrl = 'https://www.richgieg.com/nyc-subway-api/stations';
     $.getJSON(jsonUrl, function(data) {
