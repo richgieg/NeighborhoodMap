@@ -37,6 +37,21 @@ function SubwayStation(dataObj) {
             content += '<span class="info-routes">' + self.routes.join() +
                 '</span></p>';
             self.infoWindow.setContent(content);
+
+            // // Simulate API call
+            // setTimeout(function() {
+            //     content += '<h1>test</h1>';
+            //     self.infoWindow.setContent(content);
+            // }, 1000);
+
+            // var flickrUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=30543d5bbfa8313186b84d5aadecc141&photo_id=24446640991&format=json&nojsoncallback=1';
+            // $.getJSON(flickrUrl, function(data) {
+            //     console.log(data);
+            // }).fail(function() {
+            //     console.log('ERROR: Could not acquire Flickr data');
+            // });
+
+            flickr.getPhotos(self.latitude, self.longitude);
         }
 
         // Show info window
