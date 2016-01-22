@@ -23,9 +23,34 @@ function SubwayStation(dataObj) {
     });
 
     // Create the info window for this SubwayStation object
-    self.infoWindow = new google.maps.InfoWindow({
-        content: 'test'
-    });
+    self.infoWindow = new google.maps.InfoWindow();
+
+    // Shows the info window, building content first if necessary
+    self.showInfoWindow = function() {
+        // If necessary, build the info window content (only happens once)
+        if (!self.infoWindow.getContent()) {
+            self.infoWindow.setContent('Loading content...');
+            var content = '<h3 class="info-title">' + self.name + '</h3>';
+            content += '<small class="info-subtitle">' + self.line + ' / ' +
+                self.division + '</small>';
+            content += '<p class="info-route-list">Routes: '
+            content += '<span class="info-routes">' + self.routes.join() +
+                '</span></p>';
+            self.infoWindow.setContent(content);
+        }
+
+        // Show info window
+        self.infoWindow.open(map, self.mapMarker);
+    }
+
+    // Centers the map on the requested location, animates the map marker,
+    // and opens the marker's info window. This fires when a listview item
+    // is clicked, via Knockout.
+    self.focus = function() {
+        map.panTo({lat: self.latitude, lng: self.longitude});
+        self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
+        self.showInfoWindow();
+    }
 
     // Toggles the map marker's bounce animation and opens the marker's info
     // window. This is the callback for the marker's click event.
@@ -40,20 +65,11 @@ function SubwayStation(dataObj) {
         // Otherwise, start animating and open info window
         } else {
             self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
-            self.infoWindow.open(map, self.mapMarker);
+            self.showInfoWindow();
         }
 
         // Remove focus from filter textbox when marker is clicked (on iOS)
         hideIOSKeyboard();
-    }
-
-    // Centers the map on the requested location, animates the map marker,
-    // and opens the marker's info window. This fires when a listview item
-    // is clicked, via Knockout.
-    self.focus = function() {
-        map.panTo({lat: self.latitude, lng: self.longitude});
-        self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
-        self.infoWindow.open(map, self.mapMarker);
     }
 
     // Sets mapMarkerClickHandler as the click callback for the map marker

@@ -118,3 +118,23 @@ a:hover {
     visibility: visible !important;
     transition: opacity 0.5s linear;
 }
+
+.info-title {
+    min-width: 15em;
+    margin: 0;
+}
+
+.info-subtitle {
+    color: darkred;
+}
+
+.info-route-list {
+    background-color: #f1f1f1;
+    margin-top: 0.5em;
+    padding: 0.2em 0.5em;
+}
+
+.info-routes {
+    font-weight: bold;
+    color: #647fbf;
+}
