@@ -89,30 +89,40 @@ function ListViewModel() {
     // map marker visibility depending on the filter results.
     self.filterResults = ko.computed(function() {
         var matches = [];
+        // Create a regular expression for performing a case-insensitive
+        // search using the current value of the filter observable
         var re = new RegExp(self.filter(), 'i');
+
+        // Iterate over all stations objects, searching for a matching name
         self.stations().forEach(function(station) {
+            // If it's a match, save it to the list of matches and show its
+            // corresponding map marker
             if (station.name.search(re) !== -1) {
                 matches.push(station);
                 station.mapMarker.setVisible(true);
+            // Otherwise, ensure the corresponding map marker is hidden
             } else {
                 station.mapMarker.setVisible(false);
             }
         });
+
         return matches;
     });
 
-    // Show/hide the list
+    // Show/hide the list when the toggle button is clicked
     self.toggleVisibility = function() {
         self.isVisible(!self.isVisible());
     }
 
-    // Hide the list if the viewing area is small. This fires when a list item
-    // is clicked, so that the corresponding map marker's info window is
-    // not blocked by the list on smaller screens.
-    self.hideIfSmallWindow = function() {
+    // This fires when a list item is clicked
+    self.clickHandler = function(station) {
+        // Hide the list if the viewing area is small
         if (window.innerWidth < 1024) {
             self.isVisible(false);
         }
+
+        // Show the station's map marker and info window
+        station.focus();
     }
 
     // Initialize the array of SubwayStation objects asynchronously
