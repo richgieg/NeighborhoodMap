@@ -14,6 +14,7 @@ function SubwayStation(dataObj) {
     self.routes = dataObj.routes;
     self.latitude = parseFloat(dataObj.latitude);
     self.longitude = parseFloat(dataObj.longitude);
+    self.flickrContent = null;
 
     // Create the map marker for this SubwayStation object
     self.mapMarker = new google.maps.Marker({
@@ -27,7 +28,7 @@ function SubwayStation(dataObj) {
 
     // Shows the info window, building content first if necessary
     self.showInfoWindow = function() {
-        // If necessary, build the info window content (only happens once)
+        // Build the basic info window content, if hasn't been done
         if (!self.infoWindow.getContent()) {
             // Initialize basic info window content and display it
             self.infoWindow.setContent('Loading content...');
@@ -38,11 +39,14 @@ function SubwayStation(dataObj) {
             content += '<span class="info-routes">' + self.routes.join() +
                 '</span></p>';
             self.infoWindow.setContent(content);
+        }
 
+        // Build the Flickr content for the info window, if hasn't been done
+        if (!self.flickrContent) {
             // Use Flickr API to retrieve photos related to the location,
             // then display the data using a callback function
             flickr.getPhotos(self.latitude, self.longitude, function(results) {
-                content += '<div class="flickr-box">'
+                var content = '<div class="flickr-box">';
                 content += '<h3 class="flickr-headline">Flickr Photos</h3>';
                 results.forEach(function(info) {
                     content += '<a class="flickr-thumb" href="' +
@@ -50,7 +54,9 @@ function SubwayStation(dataObj) {
                         info.imgThumbUrl + '"></a>';
                 });
                 content +='</div>';
-                self.infoWindow.setContent(content);
+                self.flickrContent = content;
+                var allContent = self.infoWindow.getContent() + content;
+                self.infoWindow.setContent(allContent);
             });
         }
 
