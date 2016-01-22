@@ -5,7 +5,7 @@ function hideIOSKeyboard() {
 }
 
 
-// Model representing a subway station
+// Object representing a subway station
 function SubwayStation(dataObj) {
     var self = this;
     self.name = dataObj.name;
@@ -29,6 +29,7 @@ function SubwayStation(dataObj) {
     self.showInfoWindow = function() {
         // If necessary, build the info window content (only happens once)
         if (!self.infoWindow.getContent()) {
+            // Initialize basic info window content and display it
             self.infoWindow.setContent('Loading content...');
             var content = '<h3 class="info-title">' + self.name + '</h3>';
             content += '<small class="info-subtitle">' + self.line + ' / ' +
@@ -38,30 +39,17 @@ function SubwayStation(dataObj) {
                 '</span></p>';
             self.infoWindow.setContent(content);
 
-            // // Simulate API call
-            // setTimeout(function() {
-            //     content += '<h1>test</h1>';
-            //     self.infoWindow.setContent(content);
-            // }, 1000);
-
-            // var flickrUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=30543d5bbfa8313186b84d5aadecc141&photo_id=24446640991&format=json&nojsoncallback=1';
-            // $.getJSON(flickrUrl, function(data) {
-            //     console.log(data);
-            // }).fail(function() {
-            //     console.log('ERROR: Could not acquire Flickr data');
-            // });
-
+            // Use Flickr API to retrieve photos related to the location,
+            // then display the data using a callback function
             flickr.getPhotos(self.latitude, self.longitude, function(results) {
-                console.log(results);
                 content += '<div class="flickr-box">'
                 content += '<h3 class="flickr-headline">Flickr Photos</h3>';
                 results.forEach(function(info) {
-                    content += '<img class="flickr-thumb" src="' +
-                        info.imgThumbUrl + '">';
+                    content += '<a class="flickr-thumb" href="' +
+                        info.photoPage + '" target="_blank">' + '<img src="' +
+                        info.imgThumbUrl + '"></a>';
                 });
-
-
-                '</div>';
+                content +='</div>';
                 self.infoWindow.setContent(content);
             });
         }

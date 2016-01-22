@@ -145,8 +145,11 @@ a:hover {
 }
 
 .flickr-thumb {
-    width: 30px;
     margin: 3px 3px 3px 0;
+}
+
+.flickr-thumb > img {
+    max-width: 30px;
 }
 
 .flickr-thumb:last-child {

@@ -1,3 +1,4 @@
+// Constructor for the Flickr API helper object
 function Flickr() {
     var searchUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=30543d5bbfa8313186b84d5aadecc141&lat={latitude}&lon={longitude}&radius=1&per_page=8&format=json&nojsoncallback=1';
     var getInfoUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=30543d5bbfa8313186b84d5aadecc141&photo_id={photo_id}&format=json&nojsoncallback=1';
@@ -82,4 +83,6 @@ function Flickr() {
     }
 }
 
+
+// Global flickr object to be utilized by the app
 var flickr = new Flickr();
