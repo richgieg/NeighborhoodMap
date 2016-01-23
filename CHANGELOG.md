@@ -1,3 +1,6 @@
+1/23/16 @ 12:11 AM (Pacific):
+Stop marker bouncing on info window close
+
 1/23/16 @ 12:01 AM (Pacific):
 Implement Google Maps error alert pop-up
 

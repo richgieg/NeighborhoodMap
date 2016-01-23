@@ -95,6 +95,11 @@ function SubwayStation(dataObj) {
 
     // Sets mapMarkerClickHandler as the click callback for the map marker
     self.mapMarker.addListener('click', self.mapMarkerClickHandler);
+
+    // Stop marker bouncing when info window is closed
+    self.infoWindow.addListener('closeclick', function() {
+        self.mapMarker.setAnimation(null);
+    });
 }
 
 
