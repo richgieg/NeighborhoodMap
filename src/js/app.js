@@ -182,5 +182,12 @@ function initMap() {
 }
 
 
+// This fires if there's an issue loading the Google Maps API script
+function initMapLoadError() {
+    alert('Failed to initialize the Google Maps API');
+    console.log('Failed to initialize Google Maps API');
+}
+
+
 // Google Map object
 var map;
