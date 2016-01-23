@@ -10,6 +10,7 @@ function Flickr() {
         var url = searchUrl.replace('{latitude}', latitude)
             .replace('{longitude}', longitude);
         $.getJSON(url, callback).fail(function() {
+            alert('ERROR: Failed to search Flickr for related photos');
             console.log('ERROR: Flickr photos.search failed');
         });
     }
@@ -19,6 +20,8 @@ function Flickr() {
     function getInfo(photo_id, callback) {
         var url = getInfoUrl.replace('{photo_id}', photo_id);
         $.getJSON(url, callback).fail(function() {
+            alert('ERROR: Failed to obtain info for Flickr photo (id: ' +
+                photo_id + ')');
             console.log('ERROR: Flickr photos.getInfo failed');
         });
     }
