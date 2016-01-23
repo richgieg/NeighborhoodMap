@@ -1,3 +1,6 @@
+1/23/16 @ 01:17 AM (Pacific):
+Enlarged UI elements for mobile
+
 1/23/16 @ 01:01 AM (Pacific):
 Prevent multiple concurrent InfoWindow objects in UI
 

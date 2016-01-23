@@ -34,13 +34,12 @@ a:hover {
     background-color: white;
     opacity: 0.9;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-
     top: 5px;
     left: 5px;
-    width: 120px;
-    height: 20px;
-    line-height: 20px;
-    font-size: 0.6em;
+    width: 135px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 0.8em;
     border: 2px solid #626262;
 }
 
@@ -51,13 +50,12 @@ a:hover {
     background-color: white;
     opacity: 0.9;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-
     top: 5px;
-    left: 135px;
-    width: 120px;
-    height: 20px;
-    line-height: 20px;
-    font-size: 0.6em;
+    left: 150px;
+    width: 135px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 0.8em;
     border: 2px solid #626262;
 }
 
@@ -68,12 +66,11 @@ a:hover {
     position: absolute;
     margin: 0;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-
-    top: 35px;
+    top: 45px;
     left: 5px;
-    width: 114px;
-    height: 20px;
-    font-size: 0.6em;
+    width: 129px;
+    height: 30px;
+    font-size: 0.9em;
     border: 2px solid #aeaeae;
     padding: 0 3px;
 }
@@ -88,12 +85,11 @@ a:hover {
     -webkit-overflow-scrolling: touch;
     background-color: white;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-
-    font-size: 0.6em;
-    top: 60px;
+    font-size: 0.7em;
+    top: 80px;
     left: 5px;
-    width: 114px;
-    height: 160px;
+    width: 129px;
+    height: 180px;
     border: 2px solid #dedede;
     padding: 0 3px;
 }
@@ -108,7 +104,7 @@ a:hover {
     background-color: #efefef;
 
     margin: 3px 0;
-    padding: 2px;
+    padding: 8px 2px;
 }
 
 .station-name {
