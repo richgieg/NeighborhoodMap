@@ -14,7 +14,35 @@ articles, Yelp reviews, etc)."
 ```
 ```
 
-## Running the Application
+## Synopsis
+
+I decided to use New York City subway stations as the marked locations in my
+map project. I retrieved the data I needed from the developer section of the
+website for the Metropolitan Transit Authority (MTA). The source CSV file I
+used can be found [here](http://web.mta.info/developers/data/nyct/subway/StationEntrances.csv).
+Since the CSV file's contents consists of not only subway stations, but subway
+station entrances and exits, I had to distill the data down in such a way that
+I ended up with only unique subway stations. I then created a JSON formatted
+file with the condensed data and built a very basic read-only API to be utilized by my map
+application. The API is hosted on my web server [here](https://www.richgieg.com/nyc-subway-api/stations).
+Additionaly, I use the Flickr API to acquire images that are within 1 km of the
+geolocation of the subway stations. The Flickr API is only called upon when a
+station's marker is clicked on the map. Once a particular station's Flickr
+data has been acquired, it is cached and the Flickr API is not accessed for
+that particular subway station again.
+```
+```
+
+## Accessing the Hosted Application
+
+For your convenience, I've hosted this application on my own web server. You
+may access it through the following link:
+
+[https://www.richgieg.com/neighborhood-map/](https://www.richgieg.com/neighborhood-map/)
+```
+```
+
+## Running the Application Locally
 
 There are two options for running the application. The first option entails
 downloading the project's zip file, extracting it, then running `dist/index.html`
@@ -28,8 +56,9 @@ able to use that URL to access the site with a mobile device over a 3G/4G connec
 
 ### Option #1
 
-If you would like to quickly run the application for the sole purpose of viewing the pages (not
-rating with Google PageSpeed Insights), follow these steps:
+If you would like to quickly run the application for the sole purpose of viewing the
+site locally (not testing on a mobile device over a 3G/4G connection), follow these
+steps:
 
 - Download the project's ZIP file
 - Extract the ZIP file
@@ -38,18 +67,49 @@ rating with Google PageSpeed Insights), follow these steps:
 
 ### Option #2
 
-If you would like to serve the site publicly on the Internet for the purpose of rating the site
-using Google's PageSpeed Insights, follow these steps:
+If you would like to serve the site publicly on the Internet for the purpose of testing
+on a mobile device over a 3G/4G connection, follow these steps:
 
 - Download the project's ZIP file
 - Extract the ZIP file
 - Install [Python](https://www.python.org/downloads/) (method varies by OS... if you're on Linux you probably have it already)
 - Download and extract [ngrok](https://ngrok.com/download)
-- In a terminal, navigate to the WebsiteOptimization project's `dist` directory
+- In a terminal, navigate to the NeighborhoodMapProject `dist` directory
 - Run `python -m SimpleHTTPServer 8080`
 - In a different terminal, navigate to the location of the extracted `ngrok` binary
 - Run `./ngrok http 8080` on Linux, or `ngrok http 8080` on Windows
 - Copy the URL you are given and test it in a browser
-- Visit [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) and submit the URL
+- Visit the same URL on your mobile device over a 3G/4G connection
 ```
 ```
+
+## Building the Application
+
+If you would like to tinker with the code, make sure to edit the code that's
+in the `src` directory (development directory). Once you're done editing code,
+you will have to run the build process to generate the `dist` directory
+(production directory). The production directory contains the files that
+should actually be served on the live site. Follow these steps in order to
+run the build process.
+
+### Prerequisites
+
+You must have this software installed prior to attempting to run the build process.
+
+- Install [Node.js](https://nodejs.org/en/download/)
+- Install [npm](http://blog.npmjs.org/post/85484771375/how-to-install-npm) (the `Node.js` package manager)
+- Install [Grunt CLI](http://gruntjs.com/getting-started)
+- Install [ImageMagick](http://www.imagemagick.org/script/binary-releases.php)
+- In a terminal, navigate to the NeighborhoodMapProject root directory
+- Run `npm install` in order to download all the required Grunt modules into the `node_modules` directory
+
+### Execute Grunt
+
+After the prequisites are installed, you may run the Grunt build process.
+
+- In a terminal, navigate to the NeighborhoodMapProject root directory
+- Run `grunt`
+
+*If all goes well, you should see: `Done, without errors.` At this point, the `dist`
+directory should be populated with any modifications you made, minified and optimized
+for production.*
