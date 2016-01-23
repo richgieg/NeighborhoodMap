@@ -64,43 +64,78 @@ function SubwayStation(dataObj) {
         self.infoWindow.open(map, self.mapMarker);
     }
 
-    // Centers the map on the requested location, animates the map marker,
-    // and opens the marker's info window. This fires when a listview item
-    // is clicked, via Knockout.
-    self.focus = function() {
-        map.panTo({lat: self.latitude, lng: self.longitude});
+    // Enables marker bounce animation and shows the info window. If another
+    // SubwayStation object is active, it is deactivated first, since only one
+    // object can be active at a time. This prevents UI clutter.
+    self.activate = function() {
+        // Check the variable that references the currently active
+        // SubwayStation object. If the value is not null and it doesn't point
+        // to this object, then run its deactivate method.
+        if (SubwayStation.prototype.active) {
+            if (SubwayStation.prototype.active !== self) {
+                SubwayStation.prototype.active.deactivate();
+            }
+        }
+
+        // Enable marker bounce animation and show info window
         self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
         self.showInfoWindow();
+
+        // Set this SubwayStation object as the active one
+        SubwayStation.prototype.active = self;
     }
 
-    // Toggles the map marker's bounce animation and opens the marker's info
-    // window. This is the callback for the marker's click event.
-    self.mapMarkerClickHandler = function() {
-        // Get current animation state
-        var animationState = self.mapMarker.getAnimation();
+    // Disables marker bounce animation and closes the info window
+    self.deactivate = function() {
+        // Disable marker bounce and close info window
+        self.mapMarker.setAnimation(null);
+        self.infoWindow.close();
 
-        // If currently animating, stop animating and close info window
-        if (animationState !== null && animationState !== undefined) {
-            self.mapMarker.setAnimation(null);
-            self.infoWindow.close();
-        // Otherwise, start animating and open info window
+        // Since this object is being deactivated, the class variable which
+        // holds the reference to the active object is set to null
+        SubwayStation.prototype.active = null;
+    }
+
+    // Centers the map on the requested location, then activates this
+    // SubwayStation object. This fires when a listview item is clicked,
+    // via Knockout.
+    self.focus = function() {
+        map.panTo({lat: self.latitude, lng: self.longitude});
+        self.activate();
+    }
+
+    // Toggles the active state of this SubwayStation object. This is the
+    // callback for the marker's click event.
+    self.mapMarkerClickHandler = function() {
+        // If currently active (marker bouncing, info window visible),
+        // deactivate. Otherwise, activate.
+        if (SubwayStation.prototype.active === self) {
+            self.deactivate();
         } else {
-            self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
-            self.showInfoWindow();
+            self.activate();
         }
 
         // Remove focus from filter textbox when marker is clicked (on iOS)
         hideIOSKeyboard();
     }
 
+    // Deactivates this SubwayStation object when the info marker's close
+    // button is clicked
+    self.infoWindowCloseClickHandler = function() {
+        self.deactivate();
+    }
+
     // Sets mapMarkerClickHandler as the click callback for the map marker
     self.mapMarker.addListener('click', self.mapMarkerClickHandler);
 
-    // Stop marker bouncing when info window is closed
-    self.infoWindow.addListener('closeclick', function() {
-        self.mapMarker.setAnimation(null);
-    });
+    // Sets infoWindowCloseClickHandler as the click callback for the info
+    // window's close button
+    self.infoWindow.addListener('closeclick', self.infoWindowCloseClickHandler);
 }
+
+// Static class variable that stores the active SubwayStation object. The
+// active SubwayStation is the one with a visible info window.
+SubwayStation.prototype.active = null;
 
 
 // Main list view

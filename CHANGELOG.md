@@ -1,3 +1,6 @@
+1/23/16 @ 01:01 AM (Pacific):
+Prevent multiple concurrent InfoWindow objects in UI
+
 1/23/16 @ 12:11 AM (Pacific):
 Stop marker bouncing on info window close
 
