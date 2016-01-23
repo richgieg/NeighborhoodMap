@@ -197,11 +197,24 @@ function ListViewModel() {
     var jsonUrl = 'https://www.richgieg.com/nyc-subway-api/stations';
     $.getJSON(jsonUrl, function(data) {
         var stations = [];
+        var station;
+        var bounds = new google.maps.LatLngBounds();
         data.stations.forEach(function(dataObj) {
             // Create SubwayStation object and append it to the stations array
-            stations.push(new SubwayStation(dataObj));
+            station = new SubwayStation(dataObj);
+            stations.push(station);
+
+            // Extend the bounds to include this subway station's location
+            bounds.extend(station.mapMarker.position);
         });
+
+        // Update the stations observable array
         self.stations(stations);
+
+        // Instruct the map to resize itself to display all markers in the
+        // bounds object
+        map.fitBounds(bounds);
+
         // Set the loading message to null, effectively hiding it
         self.loadingMsg(null);
     }).fail(function() {
