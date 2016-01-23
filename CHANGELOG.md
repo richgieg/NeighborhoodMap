@@ -1,3 +1,6 @@
+1/23/16 @ 01:24 AM (Pacific):
+Run JS code through jshint.com and fix
+
 1/23/16 @ 01:17 AM (Pacific):
 Enlarged UI elements for mobile
 

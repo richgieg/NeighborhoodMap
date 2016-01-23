@@ -35,7 +35,7 @@ function SubwayStation(dataObj) {
             var content = '<h3 class="info-title">' + self.name + '</h3>';
             content += '<small class="info-subtitle">' + self.line + ' / ' +
                 self.division + '</small>';
-            content += '<p class="info-route-list">Routes: '
+            content += '<p class="info-route-list">Routes: ';
             content += '<span class="info-routes">' + self.routes.join() +
                 '</span></p>';
             self.infoWindow.setContent(content);
@@ -62,7 +62,7 @@ function SubwayStation(dataObj) {
 
         // Show info window
         self.infoWindow.open(map, self.mapMarker);
-    }
+    };
 
     // Enables marker bounce animation and shows the info window. If another
     // SubwayStation object is active, it is deactivated first, since only one
@@ -83,7 +83,7 @@ function SubwayStation(dataObj) {
 
         // Set this SubwayStation object as the active one
         SubwayStation.prototype.active = self;
-    }
+    };
 
     // Disables marker bounce animation and closes the info window
     self.deactivate = function() {
@@ -94,7 +94,7 @@ function SubwayStation(dataObj) {
         // Since this object is being deactivated, the class variable which
         // holds the reference to the active object is set to null
         SubwayStation.prototype.active = null;
-    }
+    };
 
     // Centers the map on the requested location, then activates this
     // SubwayStation object. This fires when a listview item is clicked,
@@ -102,7 +102,7 @@ function SubwayStation(dataObj) {
     self.focus = function() {
         map.panTo({lat: self.latitude, lng: self.longitude});
         self.activate();
-    }
+    };
 
     // Toggles the active state of this SubwayStation object. This is the
     // callback for the marker's click event.
@@ -117,13 +117,13 @@ function SubwayStation(dataObj) {
 
         // Remove focus from filter textbox when marker is clicked (on iOS)
         hideIOSKeyboard();
-    }
+    };
 
     // Deactivates this SubwayStation object when the info marker's close
     // button is clicked
     self.infoWindowCloseClickHandler = function() {
         self.deactivate();
-    }
+    };
 
     // Sets mapMarkerClickHandler as the click callback for the map marker
     self.mapMarker.addListener('click', self.mapMarkerClickHandler);
@@ -173,7 +173,7 @@ function ListViewModel() {
     // Show/hide the list when the toggle button is clicked
     self.toggleVisibility = function() {
         self.isVisible(!self.isVisible());
-    }
+    };
 
     // This fires when a list item is clicked
     self.clickHandler = function(station) {
@@ -184,7 +184,7 @@ function ListViewModel() {
 
         // Show the station's map marker and info window
         station.focus();
-    }
+    };
 
     // Initialize the array of SubwayStation objects asynchronously
     var jsonUrl = 'https://www.richgieg.com/nyc-subway-api/stations';
@@ -215,7 +215,7 @@ function initMap() {
     // Ensure focus is taken away from textbox when map is touched (on iOS)
     map.addListener('click', function() {
          hideIOSKeyboard();
-    })
+    });
 
     // Activate Knockout once the map is initialized
     ko.applyBindings(new ListViewModel());
