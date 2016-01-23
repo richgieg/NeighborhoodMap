@@ -163,7 +163,14 @@ function ListViewModel() {
                 station.mapMarker.setVisible(true);
             // Otherwise, ensure the corresponding map marker is hidden
             } else {
+                // Hide marker
                 station.mapMarker.setVisible(false);
+
+                // If this station is active (info window is open), then
+                // deactivate it
+                if (SubwayStation.prototype.active === station) {
+                    station.deactivate();
+                }
             }
         });
 
