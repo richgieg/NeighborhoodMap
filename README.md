@@ -1,4 +1,4 @@
-# Neighborhood Map Project
+# Neighborhood Map
 
 This is the fifth project in my pursuit of the Front-End Web Developer
 Nanodegree from Udacity. Following is Udacity's description for this project:
@@ -74,7 +74,7 @@ on a mobile device over a 3G/4G connection, follow these steps:
 - Extract the ZIP file
 - Install [Python](https://www.python.org/downloads/) (method varies by OS... if you're on Linux you probably have it already)
 - Download and extract [ngrok](https://ngrok.com/download)
-- In a terminal, navigate to the NeighborhoodMapProject `dist` directory
+- In a terminal, navigate to the NeighborhoodMap `dist` directory
 - Run `python -m SimpleHTTPServer 8080`
 - In a different terminal, navigate to the location of the extracted `ngrok` binary
 - Run `./ngrok http 8080` on Linux, or `ngrok http 8080` on Windows
@@ -100,14 +100,14 @@ You must have this software installed prior to attempting to run the build proce
 - Install [npm](http://blog.npmjs.org/post/85484771375/how-to-install-npm) (the `Node.js` package manager)
 - Install [Grunt CLI](http://gruntjs.com/getting-started)
 - Install [ImageMagick](http://www.imagemagick.org/script/binary-releases.php)
-- In a terminal, navigate to the NeighborhoodMapProject root directory
+- In a terminal, navigate to the NeighborhoodMap root directory
 - Run `npm install` in order to download all the required Grunt modules into the `node_modules` directory
 
 ### Execute Grunt
 
 After the prequisites are installed, you may run the Grunt build process.
 
-- In a terminal, navigate to the NeighborhoodMapProject root directory
+- In a terminal, navigate to the NeighborhoodMap root directory
 - Run `grunt`
 
 *If all goes well, you should see: `Done, without errors.` At this point, the `dist`
